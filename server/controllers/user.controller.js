@@ -115,5 +115,20 @@ module.exports.deleteUser = (req,res) => {
     });
 };
 
+//* Add color to favorites
+module.exports.addColorToFavorites = (req, res) => {
+  /* Query user document by id and add color to colors array using addToSet operator which adds values to the 
+  array if not already present -> will prevent duplicates in the array*/
+  User.findOneAndUpdate({_id: req.params.id}, {$addToSet: {colors: req.body}}, {new: true})
+    .then(updatedUser => res.json(updatedUser))
+    .catch(err => res.status(400).json({message: "Error Adding Color to favorites", error: err}))
+}
+
+//* Remove color from favorites
+module.exports.removeColorFromFavorites = (req, res) => {
+  User.findOneAndUpdate({_id: req.params.id}, {$pull: {colors: {r: req.body.r, g: req.body.g, b: req.body.b}}}, {new: true})
+    .then(updatedUser => res.json(updatedUser))
+    .catch(err => res.status(400).json({message: "Error Removing Color From Favorites", error: err}))
+}
 
 

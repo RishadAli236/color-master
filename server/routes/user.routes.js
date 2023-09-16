@@ -13,4 +13,8 @@ module.exports = (app) => {
   app.patch("/api/users/:id", UserController.updateUser);
   //* Delete a user
   app.delete("/api/users/:id", UserController.deleteUser);
+  //* Add color to favorites, id => user id
+  app.patch("/api/users/newColor/:id", UserController.addColorToFavorites)
+  //* Remove color from favorites, id => user id
+  app.patch("/api/users/removeColor/:id", UserController.removeColorFromFavorites)
 };
