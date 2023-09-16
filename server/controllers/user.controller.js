@@ -126,6 +126,8 @@ module.exports.addColorToFavorites = (req, res) => {
 
 //* Remove color from favorites
 module.exports.removeColorFromFavorites = (req, res) => {
+  /* Query user document by id and remove color from colors array using pull operator. Need the color values 
+  to be able to remove the specific color so include the color object in request*/
   User.findOneAndUpdate({_id: req.params.id}, {$pull: {colors: {r: req.body.r, g: req.body.g, b: req.body.b}}}, {new: true})
     .then(updatedUser => res.json(updatedUser))
     .catch(err => res.status(400).json({message: "Error Removing Color From Favorites", error: err}))
